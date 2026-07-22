@@ -37,4 +37,6 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 ## Zadanie na dziś
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`.
+Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/` 
+
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/21-07-2026` - feature/21-07-2026
