@@ -1,7 +1,45 @@
 - hosts: all
   become: true
+
+  vars:
+    admin_pubkey_path: ~/.ssh/ansible.pub
+
   tasks:
 
     - name: Update apt cache
       apt:
         update_cache: yes
+
+    - name: add ssh key for dawid
+      authorized_key:
+        user: dawid
+        key: "{{ lookup('file', admin_pubkey_path) }}"
+
+    - name: configure NOPASSWD sudo for dawid
+      copy:
+        content: "dawid ALL=(ALL) NOPASSWD: ALL\n"
+        dest: /etc/sudoers.d/dawid
+        owner: root
+        group: root
+        mode: '0440'
+        validate: 'visudo -cf %s'
+
+    - name: turn off logging with password via SSH
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PasswordAuthentication\s'
+        line: 'PasswordAuthentication no'
+      notify: Restart sshd
+
+    - name: Explicitly manage PermitRootLogin
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin\s'
+        line: 'PermitRootLogin prohibit-password'
+      notify: Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      service:
+        name: ssh
+        state: restarted
