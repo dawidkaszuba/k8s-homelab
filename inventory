@@ -1,1 +1,8 @@
-10.0.0.114
+[k8s_control_plane]
+10.0.0.20
+
+[k8s_workers]
+
+[k8s_cluster:children]
+k8s_control_plane
+k8s_workers
