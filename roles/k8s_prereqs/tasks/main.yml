@@ -1,0 +1,43 @@
+- name: Disable swap immediately
+  command: swapoff -a
+  when: ansible_swaptotal_mb | int > 0
+  changed_when: true
+
+- name: Disable swap permanently in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*\s+swap\s+.*)$'
+    replace: '# \1'
+
+- name: Load overlay kernel module for Kubernetes
+  community.general.modprobe:
+    name: overlay
+    state: present
+
+- name: Load br_netfilter kernel module for Kubernetes
+  community.general.modprobe:
+    name: br_netfilter
+    state: present
+
+- name: Set sysctl net.bridge.bridge-nf-call-iptables for Kubernetes
+  ansible.posix.sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: '1'
+    sysctl_file: /etc/sysctl.d/k8s.conf
+    state: "present"
+
+- name: Set net.bridge.bridge-nf-call-ip6tables for Kubernetes
+  ansible.posix.sysctl:
+    name: net.bridge.bridge-nf-call-ip6tables
+    value: '1'
+    sysctl_file: /etc/sysctl.d/k8s.conf
+    state: "present"
+
+- name: Set net.ipv4.ip_forward for Kubernetes
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_file: /etc/sysctl.d/k8s.conf
+    state: "present"
+
+

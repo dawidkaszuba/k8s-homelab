@@ -4,6 +4,8 @@
 
 Ansible + Kubernetes home-lab budowany od zera, jako projekt nauki DevOps. Poprzednia wersja: `/home/dawid/Dokumenty/nauka/infrastructure/infra` — zostaje jako archiwum, nie jest kontynuowana. Docelowo: 1 control plane + 2 workery (Debian), klaster k8s postawiony `kubeadm`, z docelowym wdrożeniem realnej aplikacji (`home-budget`).
 
+**Hosty:** control plane `10.0.0.20` (skonfigurowany, w `inventory`). Workery `10.0.0.21`, `10.0.0.22` — czyste maszyny Debian 13, przygotowane fizycznie, jeszcze nie dodane do `inventory`/`group_vars`/`host_vars` (dojdzie jako osobny krok, gdy Dawid będzie gotowy — patrz roadmapa pkt 4-7).
+
 ## Zasady pracy (WAŻNE — przestrzegaj zawsze)
 
 - **Jeden mały, domknięty krok dziennie** (30-60 min pracy Dawida).
@@ -37,6 +39,6 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 ## Zadanie na dziś
 
-Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/` 
+Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/23-07-2026` - feature/23-07-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/27-07-2026` - feature/23-07-2026
