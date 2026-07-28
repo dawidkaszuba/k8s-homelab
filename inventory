@@ -2,6 +2,8 @@
 10.0.0.20
 
 [k8s_workers]
+10.0.0.21
+10.0.0.22
 
 [k8s_cluster:children]
 k8s_control_plane
