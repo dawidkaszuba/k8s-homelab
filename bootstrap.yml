@@ -1,10 +1,20 @@
 - hosts: all
   become: true
 
-  vars:
-    admin_pubkey_path: ~/.ssh/ansible.pub
 
   tasks:
+
+    - name: install resolvconf
+      apt:
+        name: resolvconf
+        state: present
+
+    - name: configure base DNS settings
+      template:
+        src: resolvconf_head.j2
+        dest: /etc/resolvconf/resolv.conf.d/head
+        mode: '0644'
+      notify: update resolvconf
 
     - name: Update apt cache
       apt:
@@ -43,3 +53,7 @@
       service:
         name: ssh
         state: restarted
+
+    - name: update resolvconf
+      command:
+        cmd: resolvconf -u
