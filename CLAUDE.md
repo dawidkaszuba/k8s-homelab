@@ -11,6 +11,7 @@ Ansible + Kubernetes home-lab budowany od zera, jako projekt nauki DevOps. Poprz
 - **Jeden mały, domknięty krok dziennie** (30-60 min pracy Dawida).
 - **Dawid pisze kod. Claude robi code review — nie implementuje za Dawida.** Wyjątek: Dawid wyraźnie prosi o podpowiedź/rozwiązanie, bo utknął.
 - Code review ma być konkretny: błędy, brak idempotencji, złe practices, alternatywne podejścia, pytania kontrolne sprawdzające zrozumienie — nie tylko "wygląda dobrze".
+- Zadania na dany dzień (plik w `Journal/infra-daily/`) mają zawierać **dużo teorii, nie tylko listę komend do odpalenia**. Każdy krok diagnostyczny musi tłumaczyć, co oznacza jego wynik i jaką decyzję ten wynik wymusza (np. nie "sprawdź `apt policy containerd`", tylko też: jak czytać numer wersji, co oznacza `Installed: (none)`, jaka reguła decyzyjna z tego wynika). Cel: Dawid uczy się jednocześnie Ansible **i** samego Kubernetesa/mechanizmów pod spodem (CRI, cgroups, sieć itd.) — teoria k8s dla warstwy, którą się danego dnia konfiguruje, to osobna sekcja, nie dopisek do kroków Ansible. Nie dawaj gotowego rozwiązania na kluczowe pułapki zadania (np. idempotencja) — to ma zostać ćwiczeniem.
 - Po zaakceptowanej zmianie: notatka w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/DD-MM-YYYY.md` — co zrobione, jakie koncepcje, co poprawione po review i dlaczego (nie tylko "co", ale "dlaczego było źle").
 - Repo na razie lokalne, bez zdalnego repo na GitHubie — push dopiero gdy Dawid o to poprosi.
 - Nie dodawaj funkcji/ficzerów wybiegających poza zadanie danego dnia — trzymaj się jednego kroku na raz.
@@ -41,4 +42,4 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/29-07-2026` - feature/29-07-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/30-07-2026` - feature/30-07-2026
