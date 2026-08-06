@@ -1,5 +1,5 @@
 admin_pubkey_path: ~/.ssh/ansible.pub
-kubernetes_version: "1.36"
+kubernetes_version: "1.36.3-1.1"
 pod_network_cidr: "10.244.0.0/16"
 dns_servers:
   - 8.8.8.8
