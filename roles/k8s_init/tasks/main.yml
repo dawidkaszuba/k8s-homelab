@@ -1,0 +1,32 @@
+- name: check whether kubernetes config.yml exists
+  ansible.builtin.stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubernetes_config_file
+
+- name: kubeadm init
+  command:
+    cmd: "kubeadm init --pod-network-cidr {{ pod_network_cidr }}"
+  when: not kubernetes_config_file.stat.exists
+  register: token_command_output
+
+- name: write token command output
+  debug:
+    msg: "{{ token_command_output.stdout }}"
+  when: token_command_output is changed
+
+- name: create directory .kube
+  file:
+    path: /home/dawid/.kube/
+    state: directory
+    owner: dawid
+    group: dawid
+    mode: '0755'
+
+- name: copy admin.conf
+  copy:
+    remote_src: true
+    src: /etc/kubernetes/admin.conf
+    dest: /home/dawid/.kube/config
+    owner: dawid
+    group: dawid
+    mode: '0440'
