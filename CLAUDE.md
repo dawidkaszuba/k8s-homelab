@@ -4,7 +4,7 @@
 
 Ansible + Kubernetes home-lab budowany od zera, jako projekt nauki DevOps. Poprzednia wersja: `/home/dawid/Dokumenty/nauka/infrastructure/infra` — zostaje jako archiwum, nie jest kontynuowana. Docelowo: 1 control plane + 2 workery (Debian), klaster k8s postawiony `kubeadm`, z docelowym wdrożeniem realnej aplikacji (`home-budget`).
 
-**Hosty:** control plane `10.0.0.20` (skonfigurowany, w `inventory`). Workery `10.0.0.21`, `10.0.0.22` — czyste maszyny Debian 13, przygotowane fizycznie, jeszcze nie dodane do `inventory`/`group_vars`/`host_vars` (dojdzie jako osobny krok, gdy Dawid będzie gotowy — patrz roadmapa pkt 4-7).
+**Hosty:** control plane `k8s-ctrl` (`10.0.0.20`) + workery `k8s-wk1` (`10.0.0.21`), `k8s-wk2` (`10.0.0.22`) — wszystkie trzy w `inventory`/`group_vars`/`host_vars`. Klaster k8s postawiony (`kubeadm init` + `kubeadm join`), CNI (Flannel) zainstalowane — wszystkie node'y `Ready`, klaster funkcjonalny end-to-end (roadmapa pkt 1-8 zrobione). Stan na Dzień 12 (patrz `Journal/infra-daily/12-08-2026.md`) — źródło prawdy dla aktualnego postępu to zawsze najnowszy plik w `Journal/infra-daily/`, ta linia bywa nieaktualizowana na bieżąco.
 
 ## Zasady pracy (WAŻNE — przestrzegaj zawsze)
 
@@ -29,9 +29,9 @@ Pełna historia dzień-po-dniu jest w `@/home/dawid/Dokumenty/obsidian-vaults/Ma
 4. Rola `k8s_prereqs`: swap off, moduły jądra, sysctl.
 5. Rola `containerd`: instalacja, config, `SystemdCgroup=true`, handlery.
 6. Rola `k8s_packages`: repo pkgs.k8s.io, kubelet/kubeadm/kubectl, apt-hold.
-7. `kubeadm init` na control plane + `kubeadm join` na workerach (delegate_to, run_once, register/set_fact).
-8. CNI (Flannel/Calico) — pierwszy kontakt z zasobami k8s zamiast configów systemowych.
-9. Kubeconfig lokalnie, zarządzanie klastrem przez `kubectl` z własnej maszyny.
+7. ✅ `kubeadm init` na control plane + `kubeadm join` na workerach — zrobione (Dzień 9-10, `hostvars`/kolejność bloków `hosts:` zamiast `delegate_to`/`run_once`, patrz `Journal/infra-daily/07-08-2026.md` i `11-08-2026.md`).
+8. ✅ CNI (Flannel) — zrobione (Dzień 11, moduł `kubernetes.core.k8s`, patrz `Journal/infra-daily/12-08-2026.md`). Przy okazji poprawiona latentna wada w roli `k8s_prereqs` z Dnia 4 (`modprobe` bez `persistent:` nie przetrwał restartu hosta).
+9. Kubeconfig lokalnie, zarządzanie klastrem przez `kubectl` z własnej maszyny. (przygotowane na Dzień 12, `Journal/infra-daily/13-08-2026.md`, jeszcze nie zrobione)
 10. Wdrożenie `home-budget` na klastrze (Deployment + Service).
 11. Ingress + TLS.
 12. Ansible Vault dla sekretów (klucz SSH, przyszłe tokeny) zamiast hardkodów.
@@ -43,4 +43,4 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/11-08-2026` - feature/11-08-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/13-08-2026` - feature/13-08-2026

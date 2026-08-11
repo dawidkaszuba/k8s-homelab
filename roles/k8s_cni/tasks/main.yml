@@ -1,0 +1,12 @@
+- name: install python3-kubernetes
+  become: true
+  apt:
+    name: python3-kubernetes
+    state: present
+    update_cache: true
+
+- name: deploy Flannel
+  kubernetes.core.k8s:
+    src: https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+    kubeconfig: /home/dawid/.kube/config
+    state: present

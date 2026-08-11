@@ -12,12 +12,12 @@
 - name: Load overlay kernel module for Kubernetes
   community.general.modprobe:
     name: overlay
-    state: present
+    persistent: present
 
 - name: Load br_netfilter kernel module for Kubernetes
   community.general.modprobe:
     name: br_netfilter
-    state: present
+    persistent: present
 
 - name: Set sysctl net.bridge.bridge-nf-call-iptables for Kubernetes
   ansible.posix.sysctl:
