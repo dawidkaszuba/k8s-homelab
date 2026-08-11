@@ -1,0 +1,10 @@
+- name: check whether kubelet.conf exists
+  ansible.builtin.stat:
+    path: /etc/kubernetes/kubelet.conf
+  register: kubelet_config_file
+
+- name: join workers
+  command:
+    cmd: "{{ hostvars[groups['k8s_control_plane'][0]].join_command_output.stdout }}"
+  when: not kubelet_config_file.stat.exists
+  no_log: true
