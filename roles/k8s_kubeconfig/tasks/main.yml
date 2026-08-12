@@ -1,0 +1,5 @@
+- name: fetch .kube/config
+  fetch:
+    src: /home/dawid/.kube/config
+    dest: /home/dawid/.kube/config-k8s-homelab
+    flat: true
