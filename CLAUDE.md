@@ -35,7 +35,8 @@ Pełna historia dzień-po-dniu jest w `@/home/dawid/Dokumenty/obsidian-vaults/Ma
 10. Wdrożenie `home-budget` na klastrze (Deployment + Service).
 11. Ingress + TLS.
 12. Ansible Vault dla sekretów (klucz SSH, przyszłe tokeny) zamiast hardkodów.
-13. CI: `ansible-lint` / `--syntax-check` w GitHub Actions (po wypchnięciu repo na GitHub).
+13. Helm chart dla `home-budget` — dopiero po tym, jak aplikacja chodzi na klastrze ze zwykłych manifestów YAML (pkt 10-11), żeby najpierw poznać surowe obiekty k8s, zanim zostaną zawinięte w szablon. Helmfile świadomie pominięty — sensowny dopiero przy wielu środowiskach/chartach naraz, czego na razie nie ma.
+14. Orkiestracja: `site.yml` (`import_playbook` spinający wszystkie dotychczasowe playbooki w jedną sekwencję) + CI: `ansible-lint` / `--syntax-check` w GitLab CI (po wypchnięciu repo na GitLab; docelowo rozszerzone o `helm lint`/build obrazu `home-budget`, więc ten punkt i tak wchodzi po Helm).
 
 Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra-daily/`, nie sztywne trzymanie się kolejności, jeśli Dawid chce pogłębić jakiś temat dłużej.
 
@@ -43,4 +44,4 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/13-08-2026` - feature/13-08-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/14-08-2026` - feature/14-08-2026

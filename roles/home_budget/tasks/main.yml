@@ -1,0 +1,86 @@
+- name: get db secrets
+  include_vars:
+    file: /home/dawid/.ansible/home-budget-secrets.yml
+    name: db_secrets
+
+
+- name: create apps namespace
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: apps
+        labels:
+          name: apps
+
+- name: create home-budget secret
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: home-budget-db-secrets
+        namespace: apps
+      type: Opaque
+      stringData:
+        DB_URL: "{{ db_secrets.home_budget_db_url }}"
+        DB_USERNAME: "{{ db_secrets.home_budget_db_username }}"
+        DB_PASSWORD: "{{ db_secrets.home_budget_db_password }}"
+
+
+- name: create home-budget deployment
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: home-budget
+        namespace: apps
+        labels:
+          app: home-budget
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: home-budget
+        template:
+          metadata:
+            labels:
+              app: home-budget
+          spec:
+            containers:
+            - name: home-budget
+              image: dawidkaszuba/home-budget:1.13.0
+              ports:
+              - containerPort: 8080
+              envFrom:
+                - secretRef:
+                    name: home-budget-db-secrets
+
+
+- name: create home-budget service
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: home-budget-service
+        namespace: apps
+      spec:
+        selector:
+          app: home-budget
+        ports:
+          - protocol: TCP
+            port: 8080
+            targetPort: 8080
+            nodePort: 30452
+        type: NodePort
