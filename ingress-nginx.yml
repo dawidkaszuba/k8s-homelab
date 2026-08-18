@@ -1,0 +1,4 @@
+- hosts: k8s_control_plane
+  become: false
+  roles:
+    - ingress_nginx

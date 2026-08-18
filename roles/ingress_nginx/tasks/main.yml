@@ -1,0 +1,14 @@
+- name: install python3-kubernetes
+  become: true
+  delegate_to: localhost
+  apt:
+    name: python3-kubernetes
+    state: present
+    update_cache: true
+
+- name: install ingress-nginx controller
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config-k8s-homelab
+    state: present
+    src: "{{ role_path }}/files/deploy.yml"
+  delegate_to: localhost

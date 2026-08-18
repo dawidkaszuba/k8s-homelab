@@ -99,3 +99,27 @@
             targetPort: 8080
             nodePort: 30452
         type: NodePort
+
+- name: create home-budget ingress
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config
+    state: present
+    definition:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: home-budget-ingress
+        namespace: apps
+      spec:
+        ingressClassName: nginx
+        rules:
+          - host: home-budget.local
+            http:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: home-budget-service
+                      port:
+                        number: 8080
