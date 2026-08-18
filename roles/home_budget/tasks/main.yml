@@ -112,6 +112,10 @@
         namespace: apps
       spec:
         ingressClassName: nginx
+        tls:
+          - hosts:
+              - home-budget.local
+            secretName: home-budget-tls
         rules:
           - host: home-budget.local
             http:
@@ -123,3 +127,53 @@
                       name: home-budget-service
                       port:
                         number: 8080
+
+- name: create dir for certs
+  delegate_to: localhost
+  file:
+    path: /home/dawid/.ansible/home-budget-tls
+    state: directory
+    owner: dawid
+    group: dawid
+    mode: '0755'
+
+- name: check whether home-budget-tls file exists
+  delegate_to: localhost
+  ansible.builtin.stat:
+    path: /home/dawid/.ansible/home-budget-tls/tls.crt
+  register: home_budget_tls_file
+
+- name: check whether home-budget-tls-key file exists
+  delegate_to: localhost
+  ansible.builtin.stat:
+    path: /home/dawid/.ansible/home-budget-tls/tls.key
+  register: home_budget_tls_file_key
+
+- name: create TLS cert
+  delegate_to: localhost
+  command: openssl req -x509 -newkey rsa:2048 -nodes -keyout tls.key -out tls.crt -days 365 -subj "/CN=home-budget.local"
+  args:
+    chdir: /home/dawid/.ansible/home-budget-tls
+  when: not (home_budget_tls_file.stat.exists and home_budget_tls_file_key.stat.exists)
+
+- name: set restrictive permissions on TLS key
+  delegate_to: localhost
+  file:
+    path: /home/dawid/.ansible/home-budget-tls/tls.key
+    mode: '0600'
+  when: not (home_budget_tls_file.stat.exists and home_budget_tls_file_key.stat.exists)
+
+- name: create home-budget-tls secret
+  kubernetes.core.k8s:
+    kubeconfig: /home/dawid/.kube/config
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: home-budget-tls
+        namespace: apps
+      stringData:
+        tls.crt: "{{ lookup('file', '/home/dawid/.ansible/home-budget-tls/tls.crt') }}"
+        tls.key: "{{ lookup('file', '/home/dawid/.ansible/home-budget-tls/tls.key') }}"
+      type: kubernetes.io/tls
