@@ -1,9 +1,3 @@
-- name: get db secrets
-  include_vars:
-    file: /home/dawid/.ansible/home-budget-secrets.yml
-    name: db_secrets
-
-
 - name: create apps namespace
   kubernetes.core.k8s:
     kubeconfig: /home/dawid/.kube/config
@@ -28,9 +22,9 @@
         namespace: apps
       type: Opaque
       stringData:
-        DB_URL: "{{ db_secrets.home_budget_db_url }}"
-        DB_USERNAME: "{{ db_secrets.home_budget_db_username }}"
-        DB_PASSWORD: "{{ db_secrets.home_budget_db_password }}"
+        DB_URL: "{{ home_budget_db_url }}"
+        DB_USERNAME: "{{ home_budget_db_username }}"
+        DB_PASSWORD: "{{ home_budget_db_password }}"
 
 
 - name: create home-budget deployment
