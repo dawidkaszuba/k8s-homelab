@@ -1,3 +1,4 @@
 home_budget_db_url: "{{ vault_home_budget_db_url }}"
 home_budget_db_username: "{{ vault_home_budget_db_username }}"
 home_budget_db_password: "{{ vault_home_budget_db_password }}"
+home_budget_tls_key: "{{ vault_home_budget_tls_key }}"

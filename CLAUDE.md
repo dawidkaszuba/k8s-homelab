@@ -37,6 +37,11 @@ Pełna historia dzień-po-dniu jest w `@/home/dawid/Dokumenty/obsidian-vaults/Ma
 12. Ansible Vault dla sekretów (klucz SSH, przyszłe tokeny) zamiast hardkodów.
 13. Helm chart dla `home-budget` — dopiero po tym, jak aplikacja chodzi na klastrze ze zwykłych manifestów YAML (pkt 10-11), żeby najpierw poznać surowe obiekty k8s, zanim zostaną zawinięte w szablon. Helmfile świadomie pominięty — sensowny dopiero przy wielu środowiskach/chartach naraz, czego na razie nie ma.
 14. Orkiestracja: `site.yml` (`import_playbook` spinający wszystkie dotychczasowe playbooki w jedną sekwencję) + CI: `ansible-lint` / `--syntax-check` w GitLab CI (po wypchnięciu repo na GitLab; docelowo rozszerzone o `helm lint`/build obrazu `home-budget`, więc ten punkt i tak wchodzi po Helm).
+15. **MetalLB** — bare-metal odpowiednik `Service type: LoadBalancer` (w chmurze IP przydzielałby cloud provider, tu nie ma kto tego zrobić bez MetalLB). Naturalnie łączy się z istniejącym ingress-nginx z Dnia 15. Okazja, żeby zrozumieć mechanikę różnicy `ClusterIP`/`NodePort`/`LoadBalancer`, nie tylko nazwy.
+16. **Monitoring** (`kube-prometheus-stack`: Prometheus + Grafana + Alertmanager) — czytanie metryk cAdvisor/kubelet, pisanie `ServiceMonitor`/`PodMonitor`, rozumienie resource requests/limits jako czegoś widocznego na wykresach, nie tylko liczb w manifeście.
+17. **Storage** (`local-path-provisioner` albo Longhorn) — PV/PVC/StorageClass dla bazy danych `home-budget`, temat jeszcze nietknięty w dotychczasowej roadmapie.
+
+Punkty 15-17 dodane 2026-08-31, żeby pogłębić K8s poza "aplikacja działa end-to-end" — kierunek: LB → monitoring → storage. Braki wiedzy z samego Linuksa (sieć, cgroups, `/proc`) wplatane punktowo przy odpowiednim temacie (np. iptables/ARP przy MetalLB, cgroups v2 przy monitoringu), a nie jako osobny wątek — tak jak już przy `containerd`/`k8s_prereqs`.
 
 Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra-daily/`, nie sztywne trzymanie się kolejności, jeśli Dawid chce pogłębić jakiś temat dłużej.
 
@@ -44,4 +49,4 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/20-08-2026` - feature/20-08-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/01-09-2026` - feature/01-09-2026

@@ -169,5 +169,5 @@
         namespace: apps
       stringData:
         tls.crt: "{{ lookup('file', '/home/dawid/.ansible/home-budget-tls/tls.crt') }}"
-        tls.key: "{{ lookup('file', '/home/dawid/.ansible/home-budget-tls/tls.key') }}"
+        tls.key: "{{ home_budget_tls_key }}"
       type: kubernetes.io/tls
