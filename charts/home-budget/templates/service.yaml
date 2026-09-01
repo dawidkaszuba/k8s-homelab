@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "home-budget.fullname" . }}-service
+  namespace: {{ .Values.namespace }}
   labels:
     {{- include "home-budget.labels" . | nindent 4 }}
 spec:
