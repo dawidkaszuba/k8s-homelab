@@ -8,6 +8,7 @@ Ansible + Kubernetes home-lab budowany od zera, jako projekt nauki DevOps. Poprz
 
 ## Zasady pracy (WAŻNE — przestrzegaj zawsze)
 
+- **Zawsze odpowiadaj po polsku.**
 - **Jeden mały, domknięty krok dziennie** (30-60 min pracy Dawida).
 - **Dawid pisze kod. Claude robi code review — nie implementuje za Dawida.** Wyjątek: Dawid wyraźnie prosi o podpowiedź/rozwiązanie, bo utknął.
 - Code review ma być konkretny: błędy, brak idempotencji, złe practices, alternatywne podejścia — nie tylko "wygląda dobrze". **Bez pytań kontrolnych / quizowych** ("zastanów się dlaczego...", "pytanie kontrolne: ..."). Dawid dopiero się uczy Ansible i Kubernetesa — nie zakładaj, że ma już wiedzę, którą można sprawdzić pytaniem. Zamiast pytania, od razu wytłumacz.
@@ -50,4 +51,4 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/9_wrzesień/04-09-2026` - feature/04-09-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/9_wrzesień/05-09-2026` - feature/05-09-2026
