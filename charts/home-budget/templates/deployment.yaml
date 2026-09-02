@@ -38,4 +38,4 @@ spec:
           {{- end }}
           envFrom:
             - secretRef:
-                name: home-budget-db-secrets
+                name: {{ .Values.database.secretName }}

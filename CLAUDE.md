@@ -40,6 +40,7 @@ Pełna historia dzień-po-dniu jest w `@/home/dawid/Dokumenty/obsidian-vaults/Ma
 15. **MetalLB** — bare-metal odpowiednik `Service type: LoadBalancer` (w chmurze IP przydzielałby cloud provider, tu nie ma kto tego zrobić bez MetalLB). Naturalnie łączy się z istniejącym ingress-nginx z Dnia 15. Okazja, żeby zrozumieć mechanikę różnicy `ClusterIP`/`NodePort`/`LoadBalancer`, nie tylko nazwy.
 16. **Monitoring** (`kube-prometheus-stack`: Prometheus + Grafana + Alertmanager) — czytanie metryk cAdvisor/kubelet, pisanie `ServiceMonitor`/`PodMonitor`, rozumienie resource requests/limits jako czegoś widocznego na wykresach, nie tylko liczb w manifeście.
 17. **Storage** (`local-path-provisioner` albo Longhorn) — PV/PVC/StorageClass dla bazy danych `home-budget`, temat jeszcze nietknięty w dotychczasowej roadmapie.
+18. **External Secrets Operator (ESO)** — zastąpienie dzisiejszego wzorca (Secrety tworzone przez rolę Ansible z `group_vars/all/vault.yml`, chart Helma tylko referencjonuje nazwę) kontrolerem synchronizującym Secrety z zewnętrznego źródła, bez ich obecności w Gicie nawet w postaci zaszyfrowanej. Naturalnie wchodzi po punkcie 14 (podłączenie `kubernetes.core.helm` do roli) — decyzja i uzasadnienie zapisane w `Journal/infra-daily/9_wrzesień/04-09-2026.md` (Dzień 22): ESO wybrany świadomie zamiast pośredniego kroku "rola nadal tworzy Secrety osobno", bo to wzorzec faktycznie stosowany w zespołach, więc bardziej opłaca się nauczyć go od razu niż wdrażać tymczasowe rozwiązanie po drodze.
 
 Punkty 15-17 dodane 2026-08-31, żeby pogłębić K8s poza "aplikacja działa end-to-end" — kierunek: LB → monitoring → storage. Braki wiedzy z samego Linuksa (sieć, cgroups, `/proc`) wplatane punktowo przy odpowiednim temacie (np. iptables/ARP przy MetalLB, cgroups v2 przy monitoringu), a nie jako osobny wątek — tak jak już przy `containerd`/`k8s_prereqs`.
 
@@ -49,4 +50,4 @@ Roadmapa jest orientacyjna — priorytet ma rzeczywisty postęp z `Journal/infra
 
 Zadania z każdego dnia będą na branchach, które odpowiadają zadaniu z pliku w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/`
 
-Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/9_wrzesień/03-09-2026` - feature/03-09-2026
+Patrz najnowszy plik w `@/home/dawid/Dokumenty/obsidian-vaults/Main/Journal/infra-daily/9_wrzesień/04-09-2026` - feature/04-09-2026

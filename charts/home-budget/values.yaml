@@ -168,3 +168,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# It keeps only name of a secret not a secret itself. Chart does not create secret. Secret is created in roles/home_budget/tasks/main.yml:13-27
+database:
+  secretName: home-budget-db-secrets
